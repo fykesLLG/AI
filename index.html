@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Офлайн ИИ Чат</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем манифест PWA -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Подключаем официальный веб-движок WebLLM -->
+    <script type="module">
+        import * as webllm from "https://esm.run";
+        window.webllm = webllm;
+    </script>
+</head>
+<body>
+
+    <div class="chat-container">
+        <header>
+            <h2>Локальный ИИ Qwen 1.5B</h2>
+            <div id="status">Инициализация движка...</div>
+            <div id="progress-container" class="hidden">
+                <div id="progress-bar"></div>
+            </div>
+        </header>
+
+        <div id="chat-box" class="chat-box">
+            <div class="message ai">Привет! Когда статус вверху загорится зелёным и покажет «Готов к работе», ты сможешь общаться со мной полностью без интернета на любые темы.</div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Напишите что-нибудь..." disabled>
+            <button id="send-btn" disabled>Отправить</button>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script>
+        // Регистрация Service Worker для работы в офлайне (нужно для PWA)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+        }
+    </script>
+</body>
+</html>
